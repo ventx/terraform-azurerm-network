@@ -20,6 +20,13 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
+      - name: Configure AWS credentials
+        if: ${{ env.AWS_DEFAULT_REGION }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ secrets.AWS_GH_OIDC }}
+
       - name: Set Versions
         run: |
           TFVER=$(grep .tool-versions -e "terraform" | sed "s/terraform \(.*\)/\1/")
