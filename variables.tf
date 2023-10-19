@@ -24,7 +24,7 @@ variable "rg_name" {
 variable "region" {
   description = "AKS region (e.g. `West Europe`) -> `az account list-locations --output table`"
   type        = string
-  default     = "Germany West Central"
+  default     = "East US"
 }
 
 variable "number_azs" {
