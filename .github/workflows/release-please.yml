@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
+      ARM_USE_OIDC: true
+      ARM_SKIP_PROVIDER_REGISTRATION: true
       TFDIR: .
       TF_VAR_rg_name: github-oidc
       TF_VAR_subnet_ids: '["test"]'
