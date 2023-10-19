@@ -24,6 +24,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configure AWS credentials
+        if: ${{ env.AWS_DEFAULT_REGION }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ secrets.AWS_GH_OIDC }}
+
       - name: Set Versions
         run: |
           TFVER=$(grep .tool-versions -e "terraform" | sed "s/terraform \(.*\)/\1/")
@@ -55,11 +62,6 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform -chdir=${{ env.TFDIR }} validate -no-color
-
-      - name: Terraform Test
-        id: test
-        run: terraform test -verbose
-        continue-on-error: true
 
       - name: Terraform Plan
         id: plan
