@@ -7,13 +7,9 @@ variable "name" {
 variable "tags" {
   description = "User specific Tags / Labels to attach to resources (will be merged with module tags)"
   type        = map(string)
-  default     = {}
-}
-
-variable "static_unique_id" {
-  description = "Static unique ID, defined in the root module once, to be suffixed to all resources for uniqueness (if you choose uuid / longer id, some resources will be cut of at max length - empty means disable and NOT add unique suffix)"
-  type        = string
-  default     = ""
+  default = {
+    "ManagedBy" = "Terraform"
+  }
 }
 
 variable "rg_name" {
@@ -26,17 +22,6 @@ variable "region" {
   type        = string
   default     = "East US"
 }
-
-variable "number_azs" {
-  description = "Number of Availability Zones"
-  type        = number
-  default     = 3
-  validation {
-    condition     = can(regex("^1|2|3", var.number_azs))
-    error_message = "The number_azs value must be >=1 and <= 3."
-  }
-}
-
 
 # --------------------------------------------------------------------------
 # VPC
@@ -52,7 +37,6 @@ variable "vpc_cidr_hub" {
   type        = string
   default     = "10.20.0.0/16"
 }
-
 
 variable "single_nat_gateway" {
   description = "Should be true if you want to provision a single shared NAT Gateway across all of your private networks"
