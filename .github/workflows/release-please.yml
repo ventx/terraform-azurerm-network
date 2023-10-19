@@ -17,6 +17,7 @@ jobs:
     timeout-minutes: 15
     env:
       TFDIR: .
+      TF_VAR_rg_name: github-oidc
       TF_VAR_subnet_ids: '["test"]'
       TF_VAR_workspace_name: rover
       TFVER: 1.1.2 # Rover uses Terraform 1.1.2, so we need to use the same version for the plan file
