@@ -1,46 +1,293 @@
-# stackx-template-terraform
+<h1 align="center">
+  <a href="https://github.com/ventx/terraform-azurerm-stackx-network">
+    <!-- Please provide path to your logo here -->
+    <img src="https://raw.githubusercontent.com/ventx/terraform-azurerm-stackx-network/main/docs/images/logo.svg" alt="Logo" width="100" height="100">
+  </a>
+</h1>
 
-Template repository for Terraform used by all our stackx GitHub repositories.
+<div align="center">
+  ventx/terraform-azurerm-stackx-network
+  <br />
+  <a href="#about"><strong>Explore the diagrams »</strong></a>
+  <br />
+  <br />
+  <a href="https://github.com/ventx/terraform-azurerm-stackx-network/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
+  ·
+  <a href="https://github.com/ventx/terraform-azurerm-stackx-network/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
+  ·
+  <a href="https://github.com/ventx/terraform-azurerm-stackx-network/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+">Ask a Question</a>
+</div>
 
-This repo will be synced with the
-[AndreasAugustin/actions-template-sync](https://github.com/AndreasAugustin/actions-template-sync) GitHub Action.
+<div align="center">
+<br />
+
+[![Project license](https://img.shields.io/github/license/ventx/terraform-azurerm-stackx-network.svg?style=flat-square)](LICENSE)
+
+[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/ventx/terraform-azurerm-stackx-network/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+[![code with love by ventx](https://img.shields.io/badge/%3C%2F%3E%20with%20♥%20by-ventx-blue)](https://github.com/ventx)
+
+</div>
+
+<details open>
+<summary>Table of Contents</summary>
+
+- [About](#about)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Quickstart](#quickstart)
+- [Usage](#usage)
+- [Support](#support)
+- [Project assistance](#project-assistance)
+- [Contributing](#contributing)
+- [Authors & contributors](#authors--contributors)
+- [Security](#security)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+- [Roadmap](#roadmap)
+
+</details>
+
+---
+
+## About
+
+> Creates Hub & Spoke network architecture in Microsoft Azure.
+> Supports common lifecycle patterns for soft and hard deletion/removal.
+> Disabled all public access by default. -- Part of stackx.
 
 
-## Requirements
-
-### Secrets
-During setup of the new GitHub repository, set these [Secrets for GitHub Actions](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository):
-
-* `INFRACOST_API_KEY` ([Infracost](https://www.infracost.io))
-* `LOCALSTACK_API_KEY` ([LocalStack](https://localstack.cloud))
-* `PERSONAL_ACCESS_TOKEN` (GitHub Personal Access Token with `workflow` scope)
-
-> For modules without LocalStack support, please set `LOCALSTACK_API_KEY` 
-> to `false`
+<details>
+<summary>ℹ️ Architecture Diagrams</summary>
+<br>
 
 
-### Diagrams
+|                                Placeholder                                 |                                                            Rover                                                            |
+|:-------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------:|
+| <img src="https://raw.githubusercontent.com/ventx/terraform-azurerm-stackx-network/main/docs/images/screenshot1.png" title="Placeholder" width="100%"> | <img src="https://raw.githubusercontent.com/ventx/terraform-azurerm-stackx-network/main/docs/images/screenshot2.png" title="Rover" width="100%"> |
 
-Add a `diagram.py` in `docs/images` to automatically generate a 
-[diagram as code](https://diagrams.mingrammer.com).
+</details>
 
-The required syntax (replace `repository-name` accordingly:
 
-```python
-with Diagram("repository-name", outformat="png", filename="screenshot1", show=False):
+### Built With
+
+<no value>
+
+
+## Getting Started
+
+### Prerequisites
+
+
+* AWS credentials
+* Terraform
+
+### Quickstart
+
+To get started, clone the projects, check all configurable [Inputs](#inputs) and deploy everything with `make`.
+
+```shell
+git clone https://github.com/ventx/terraform-azurerm-stackx-network.git
+make all # init, validate, plan, apply
 ```
 
 
-### README
 
-Create a `README.yaml` in the `docs/` subdirectory, which will be used in the 
-[stackx-action-readme-templates](https://github.com/ventx/stackx-action-readme-templates) 
-GitHub Action to generate the final README.md file.
+## Usage
 
 
-### Pull Request Labels
+You can run this module in conjunction with other stackx components (recommended) or as single-use (build your own).
 
-Add the following labels to your repository if they are not already there:
+Deployment time: around 1 minute
 
-* `chore`
-* `template-sync`
+### stackx (RECOMMENDED)
+
+This is just a bare minimum example of how to use the module.
+See all available stackx modules here: https://github.com/ventx
+
+
+```hcl
+  module "azure-network" {
+    source          = "ventx/stackx-network/azurerm"
+    version     = "0.1.0" // Pinned and tested version, generated by {x-release-please-version}
+  }
+```
+
+### Single-Use
+
+```hcl
+  module "azure-network" {
+    source = "ventx/stackx-network/azurerm"
+    version     = "0.1.0" // Pinned and tested version, generated by {x-release-please-version}
+    rg_group = "my-resource-group"
+  }
+```
+
+
+
+
+## Terraform
+
+
+
+### Features
+
+
+* Simple and easy to use, just the bare minimum
+* Control-Plan logs ingested to CloudWatch via KMS encryption
+* IAM OIDC provider to be used with EKS IRSA
+
+### Resources
+
+
+* EKS
+* IAM OIDC provider
+* SecurityGroup
+* SecurityGroup rules
+* KMS Key
+* KMS Key Alias
+
+### Opinions
+
+Our Terraform modules are are highly opionated:
+
+* Keep modules small, focused, simple and easy to understand
+* Prefer simple code over complex code
+* Prefer [KISS](https://en.wikipedia.org/wiki/KISS_principle) > [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+* Set some sane default values for variables, but do not set a default value if user input is strictly required
+
+
+These opinions can be seen as some _"soft"_ rules but which are not strictly required.
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.3.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.76.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [azurerm_nat_gateway.natgw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway) | resource |
+| [azurerm_nat_gateway_public_ip_association.assing](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_association) | resource |
+| [azurerm_nat_gateway_public_ip_prefix_association.assign](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_prefix_association) | resource |
+| [azurerm_public_ip.natgw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
+| [azurerm_public_ip_prefix.prefix](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip_prefix) | resource |
+| [azurerm_route_table.rt](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table) | resource |
+| [azurerm_subnet.aks](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
+| [azurerm_subnet.ingress](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
+| [azurerm_subnet.natgw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
+| [azurerm_subnet_nat_gateway_association.attach](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_nat_gateway_association) | resource |
+| [azurerm_subnet_route_table_association.rtassoc](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_route_table_association) | resource |
+| [azurerm_virtual_network.hub1_natgwvnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
+| [azurerm_virtual_network.spoke1_kubevnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
+| [azurerm_virtual_network_peering.HubToSpoke1](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
+| [azurerm_virtual_network_peering.Spoke1ToHub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_name"></a> [name](#input\_name) | Base Name for all resources (preferably generated by terraform-null-label) | `string` | `"stackx-network"` | no |
+| <a name="input_region"></a> [region](#input\_region) | AKS region (e.g. `West Europe`) -> `az account list-locations --output table` | `string` | `"East US"` | no |
+| <a name="input_rg_name"></a> [rg\_name](#input\_rg\_name) | Name of Azure Resource Group | `string` | n/a | yes |
+| <a name="input_single_nat_gateway"></a> [single\_nat\_gateway](#input\_single\_nat\_gateway) | Should be true if you want to provision a single shared NAT Gateway across all of your private networks | `bool` | `false` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | User specific Tags / Labels to attach to resources (will be merged with module tags) | `map(string)` | <pre>{<br>  "ManagedBy": "Terraform"<br>}</pre> | no |
+| <a name="input_vpc_cidr_hub"></a> [vpc\_cidr\_hub](#input\_vpc\_cidr\_hub) | hub1-firewalvnet Azure Virtual Network VPC CIDR network block (e.g. `10.1.0.0/16`) | `string` | `"10.20.0.0/16"` | no |
+| <a name="input_vpc_cidr_kubevnet"></a> [vpc\_cidr\_kubevnet](#input\_vpc\_cidr\_kubevnet) | spoke1-kubevnet Azure Virtual Network VPC CIDR network block (e.g. `10.1.0.0/16`) | `string` | `"10.10.0.0/16"` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_aks_subnet_address_prefixes"></a> [aks\_subnet\_address\_prefixes](#output\_aks\_subnet\_address\_prefixes) | Subnet 2 - AKS address prefixes |
+| <a name="output_aks_subnet_id"></a> [aks\_subnet\_id](#output\_aks\_subnet\_id) | Subnet 2 - AKS Subnet ID |
+| <a name="output_hub1_natgwvnet_address_space"></a> [hub1\_natgwvnet\_address\_space](#output\_hub1\_natgwvnet\_address\_space) | n/a |
+| <a name="output_hub1_natgwvnet_network_name"></a> [hub1\_natgwvnet\_network\_name](#output\_hub1\_natgwvnet\_network\_name) | n/a |
+| <a name="output_hub1_natgwvnet_vpc_cidr"></a> [hub1\_natgwvnet\_vpc\_cidr](#output\_hub1\_natgwvnet\_vpc\_cidr) | n/a |
+| <a name="output_ingress_subnet_address_prefixes"></a> [ingress\_subnet\_address\_prefixes](#output\_ingress\_subnet\_address\_prefixes) | Subnet 1 - Ingress address prefixes |
+| <a name="output_ingress_subnet_id"></a> [ingress\_subnet\_id](#output\_ingress\_subnet\_id) | Subnet 1 - Ingress Subnet ID |
+| <a name="output_natgw_public_ip_address"></a> [natgw\_public\_ip\_address](#output\_natgw\_public\_ip\_address) | natgw - Public IP address |
+| <a name="output_natgw_public_ip_prefix"></a> [natgw\_public\_ip\_prefix](#output\_natgw\_public\_ip\_prefix) | natgw - Public IP Prefix |
+| <a name="output_natgw_subnet_address_prefixes"></a> [natgw\_subnet\_address\_prefixes](#output\_natgw\_subnet\_address\_prefixes) | natgw Subnet address prefixes |
+| <a name="output_natgw_subnet_id"></a> [natgw\_subnet\_id](#output\_natgw\_subnet\_id) | natgw (NAT Gatway) - Ingress Subnet ID |
+| <a name="output_spoke1_kubevnet_address_space"></a> [spoke1\_kubevnet\_address\_space](#output\_spoke1\_kubevnet\_address\_space) | n/a |
+| <a name="output_spoke1_kubevnet_network_name"></a> [spoke1\_kubevnet\_network\_name](#output\_spoke1\_kubevnet\_network\_name) | n/a |
+| <a name="output_spoke1_kubevnet_vpc_cidr"></a> [spoke1\_kubevnet\_vpc\_cidr](#output\_spoke1\_kubevnet\_vpc\_cidr) | n/a |
+<!-- END_TF_DOCS -->
+
+
+
+## Support
+
+If you need professional support directly by the maintainers of the project, don't hesitate to contact us:
+<a href="https://www.ventx.de/kontakt.html">
+  <img align="center" src="https://i.imgur.com/OoCRUwz.png" alt="ventx Contact Us Kontakt" />
+</a>
+
+- [GitHub issues](https://github.com/ventx/terraform-azurerm-stackx-network/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+)
+- Contact options listed on [this GitHub profile](https://github.com/hajowieland)
+
+
+## Project assistance
+
+If you want to say **thank you** or/and support active development of terraform-azurerm-stackx-network:
+
+- Add a [GitHub Star](https://github.com/ventx/terraform-azurerm-stackx-network) to the project.
+- Tweet about the terraform-azurerm-stackx-network.
+- Write interesting articles about the project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or your personal blog.
+
+Together, we can make terraform-azurerm-stackx-network **better**!
+
+
+
+
+## Contributing
+
+First off, thanks for taking the time to contribute! Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody else and are **greatly appreciated**.
+
+Please read [our contribution guidelines](.github/CONTRIBUTING.md), and thank you for being involved!
+
+
+## Security
+
+terraform-azurerm-stackx-network follows good practices of security, but 100% security cannot be assured.
+terraform-azurerm-stackx-network is provided **"as is"** without any **warranty**. Use at your own risk.
+
+_For more information and to report security issues, please refer to our [security documentation](.github/SECURITY.md)._
+
+
+## License
+
+This project is licensed under the **Apache 2.0 license**.
+
+See [LICENSE](LICENSE) for more information.
+
+
+## Acknowledgements
+
+* All open source contributors who made this possible
+
+
+## Roadmap
+
+See the [open issues](https://github.com/ventx/terraform-azurerm-stackx-network/issues) for a list of proposed features (and known issues).
+
+- [Top Feature Requests](https://github.com/ventx/terraform-azurerm-stackx-network/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Top Bugs](https://github.com/ventx/terraform-azurerm-stackx-network/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Newest Bugs](https://github.com/ventx/terraform-azurerm-stackx-network/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
+
+
