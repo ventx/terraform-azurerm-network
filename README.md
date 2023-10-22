@@ -171,7 +171,7 @@ These opinions can be seen as some _"soft"_ rules but which are not strictly req
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.76.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.77.0 |
 
 ## Modules
 
